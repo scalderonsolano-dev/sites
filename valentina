@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>No crezcas más - Tercer Cielo</title>
+<style>
+    body {
+        font-family: "Georgia", serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #fff;
+        margin: 0;
+    }
+    .player {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #000;
+    }
+    button {
+        background-color: #8B3A3A; /* tono vino suave */
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #A05252;
+    }
+    input[type="range"] {
+        accent-color: #8B3A3A; /* barra vino */
+        width: 200px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<div class="player">
+    <div class="title">No crezcas más - Tercer Cielo</div>
+    <button id="playPause">▶</button>
+    <input type="range" id="progress" value="0" step="1">
+</div>
+
+<audio id="audio" src="TercerCielo-NoCrezcasMas.mp3"></audio>
+
+<script>
+    const audio = document.getElementById('audio');
+    const playPauseBtn = document.getElementById('playPause');
+    const progress = document.getElementById('progress');
+
+    playPauseBtn.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+            playPauseBtn.textContent = '⏸';
+        } else {
+            audio.pause();
+            playPauseBtn.textContent = '▶';
+        }
+    });
+
+    audio.addEventListener('timeupdate', () => {
+        progress.max = audio.duration;
+        progress.value = audio.currentTime;
+    });
+
+    progress.addEventListener('input', () => {
+        audio.currentTime = progress.value;
+    });
+</script>
+
+</body>
+</html>
